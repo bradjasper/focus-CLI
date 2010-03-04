@@ -48,5 +48,3 @@ Jump in and out of focus mode:
 
 # Contact
 bjasper@gmail.com
-
-Hello
