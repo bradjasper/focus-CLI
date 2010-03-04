@@ -6,8 +6,9 @@ from utils import get_file_lines
 
 class HostsFile(object):
 
-    def __init__(self, path="/etc/hosts"):
+    def __init__(self, path="/etc/hosts", backup="/tmp/hosts.bak"):
         self.path = path
+        self.backup = backup
 
         self._lines = self.parse_hosts_file(self.path)
 
@@ -15,19 +16,18 @@ class HostsFile(object):
     def lines(self):
         return [self.join_hosts_line(line) for line in self._lines]
 
-    def write(self, path, backup=None):
+    def write(self):
         "Write out the hosts file to a path"
 
-        if backup:
-            copyfile(path, backup)
+        if self.backup:
+            copyfile(self.path, self.backup)
 
-        with open(path, "w") as file:
+        with open(self.path, "w") as file:
             for line in self.lines:
                 file.write(line + "\n")
 
     def host_exists(self, host):
         "Check if a host exists within an array of /etc/hosts lines"
-
         for line in self._lines:
             
             if isinstance(line, list):
@@ -36,16 +36,22 @@ class HostsFile(object):
 
         return False
 
-
     def add_host(self, host, ip_address):
         "Add new hosts to a list if it doesn't already exist"
-
         if self.host_exists(host):
             logging.warning("'%s' already exists in %s, skipping", host, self.path)
             return False
 
         self._lines.append([ip_address, host])
         return True
+
+    def remove_host(self, host):
+        "Remove a host from the list"
+
+        def _remove_host(line):
+            return isinstance(line, list) and line[1] != host
+
+        self._lines = filter(_remove_host, self._lines)
 
 
     @classmethod
