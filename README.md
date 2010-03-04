@@ -1,11 +1,10 @@
- <pre>
- ______
+
+ <pre> ______
 |  ____|
 | |__ ___   ___ _   _ ___
 |  __/ _ \ / __| | | / __|
 | | | (_) | (__| |_| \__ \
-|_|  \___/ \___|\__,_|___/
-</pre>
+|_|  \___/ \___|\__,_|___/</pre>
 
 Focus is a command line utility to block certain sites that steal your focus.
 
