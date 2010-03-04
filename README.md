@@ -1,11 +1,12 @@
-    ____ ____ ____ _  _ ____ 
-    |___ |  | |    |  | [__  
-    |    |__| |___ |__| ___] 
-
+|  ___|
+| |_ ___   ___ _   _ ___
+|  _/ _ \ / __| | | / __|
+| || (_) | (__| |_| \__ \
+\_| \___/ \___|\__,_|___/
 
 Focus is a command line utility to block certain sites that steal your focus.
 
-``sudo pip install -e git+git@github.com:bradjasper/focus.git#egg=focus``
+    sudo pip install -e git+git@github.com:bradjasper/focus.git#egg=focus
 
 
 # Features
