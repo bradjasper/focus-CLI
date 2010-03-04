@@ -43,8 +43,14 @@ Add some entries to **$HOME/.focus**
 Jump in and out of focus mode:
 
     > focus
+    > ping mail.google.com
+    PING mail.google.com (127.0.0.1): 56 data bytes
     ....
+
     > unfocus
+    > ping mail.google.com
+    PING mail.google.com (209.85.225.19): 56 data bytes
+    ..
 
 # Contact
 bjasper@gmail.com
