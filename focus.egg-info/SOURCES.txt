@@ -1,0 +1,12 @@
+README
+setup.py
+bin/focus
+bin/unfocus
+focus/__init__.py
+focus/base.py
+focus/focus.py
+focus/utils.py
+focus.egg-info/PKG-INFO
+focus.egg-info/SOURCES.txt
+focus.egg-info/dependency_links.txt
+focus.egg-info/top_level.txt
