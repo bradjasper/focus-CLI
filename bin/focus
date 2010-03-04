@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo /usr/bin/env python -c "import focus; focus.activate()"
