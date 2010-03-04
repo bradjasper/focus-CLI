@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='focus',
-    version="0.1b",
+    version="0.1",
     description="Focus",
     author="Brad Jasper",
     author_email="bjasper@gmail.com",
@@ -10,12 +10,5 @@ setup(
     platforms=["linux"],
     license="BSD",
     packages=find_packages(),
-    scripts=["bin/focus", "bin/unfocus"],
-    #    entry_points={
-    #    'console_scripts': [
-    #        'celeryd = celery.bin.celeryd:main',
-    #        'celeryinit = celery.bin.celeryinit:main',
-    #        'celerybeat = celery.bin.celerybeat:main'
-    #        ]
-    #},
+    scripts=["bin/focus", "bin/unfocus"]
 )

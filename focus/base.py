@@ -5,11 +5,11 @@ from shutil import copyfile
 from utils import get_file_lines
 
 class HostsFile(object):
+    """Represents an /etc/hosts file"""
 
     def __init__(self, path="/etc/hosts", backup="/tmp/hosts.bak"):
         self.path = path
         self.backup = backup
-
         self._lines = self.parse_hosts_file(self.path)
 
     @property
@@ -43,13 +43,16 @@ class HostsFile(object):
             return False
 
         self._lines.append([ip_address, host])
+
         return True
 
-    def remove_host(self, host):
+    def remove_host(self, host, ip_address):
         "Remove a host from the list"
 
         def _remove_host(line):
-            return isinstance(line, list) and line[1] != host
+            if isinstance(line, list):
+                return line[0] != ip_address or line[1] != host
+            return True
 
         self._lines = filter(_remove_host, self._lines)
 
