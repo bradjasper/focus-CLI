@@ -52,5 +52,9 @@ Jump in and out of focus mode:
     PING mail.google.com (209.85.225.19): 56 data bytes
     ..
 
+# TODO
+
+* Change internals so existing lines aren't re-written. This means no internal conversion back and forth.
+
 # Contact
 bjasper@gmail.com

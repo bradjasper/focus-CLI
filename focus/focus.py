@@ -2,28 +2,23 @@
 
 import sys
 
-from utils import get_focusfile, get_file_lines
+from utils import get_focus_urls
 from base import HostsFile
 
 hostsfile = HostsFile("/etc/hosts", backup="/tmp/hosts.bak")
 ENABLE_WWW = True
+LOCALHOST = "127.0.0.1"
 
 def error():
     print "Please specify either 'activate' or 'deactivate'"
     sys.exit(1)
 
-def host_action(action):
+def host_action(fname):
 
-    fname = {
-        "activate": "add_host",
-        "deactivate": "remove_host"}.get(action)
+    action_func = lambda host: getattr(hostsfile, fname)(host, LOCALHOST)
 
-    if not fname:
-        error()
+    for host in get_focus_urls():
 
-    action_func = lambda host: getattr(hostsfile, fname)(host, "127.0.0.1")
-
-    for host in get_file_lines(get_focusfile()):
         action_func(host)
 
         if ENABLE_WWW and not host.startswith("www."):
@@ -32,13 +27,13 @@ def host_action(action):
     hostsfile.write()
 
 def activate():
-    host_action("activate")
-    print "Focus is activated... go!"
+    host_action("add_host")
+    print "-> Focus is activated... Go focus!"
 
 
 def deactivate():
-    host_action("deactivate")
-    print "Focus is deactivated..."
+    host_action("remove_host")
+    print "-> Focus is deactivated... Were you productive?"
 
 if __name__ == "__main__":
 

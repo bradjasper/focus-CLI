@@ -10,11 +10,7 @@ class HostsFile(object):
     def __init__(self, path="/etc/hosts", backup="/tmp/hosts.bak"):
         self.path = path
         self.backup = backup
-        self._lines = self.parse_hosts_file(self.path)
-
-    @property
-    def lines(self):
-        return [self.join_hosts_line(line) for line in self._lines]
+        self.lines = self.parse_hosts_file(self.path)
 
     def write(self):
         "Write out the hosts file to a path"
@@ -24,15 +20,14 @@ class HostsFile(object):
 
         with open(self.path, "w") as file:
             for line in self.lines:
-                file.write(line + "\n")
+                file.write(unicode(line))
 
     def host_exists(self, host):
         "Check if a host exists within an array of /etc/hosts lines"
-        for line in self._lines:
-            
-            if isinstance(line, list):
-                if line[1] == host:
-                    return True
+
+        for line in self.lines:
+            if line.is_host and line.host == host:
+                return True
 
         return False
 
@@ -42,7 +37,7 @@ class HostsFile(object):
             logging.warning("'%s' already exists in %s, skipping", host, self.path)
             return False
 
-        self._lines.append([ip_address, host])
+        self.lines.append(HostLine.create(ip_address, host))
 
         return True
 
@@ -50,31 +45,50 @@ class HostsFile(object):
         "Remove a host from the list"
 
         def _remove_host(line):
-            if isinstance(line, list):
-                return line[0] != ip_address or line[1] != host
+            if line.is_host:
+                return line.host != host or line.ip != ip_address
             return True
 
-        self._lines = filter(_remove_host, self._lines)
-
+        self.lines = filter(_remove_host, self.lines)
 
     @classmethod
     def parse_hosts_file(cls, path):
         "Parse a hosts file ``path`` and return a list of lines"
-        return [cls.parse_hosts_line(line) for line in get_file_lines(path)]
+        return [HostLine(line) for line in get_file_lines(path)]
+
+
+class HostLine(object):
+    "Represents a single line from /etc/hosts"
+
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return self.value
 
     @classmethod
-    def parse_hosts_line(cls, line):
-        "Split an /etc/hosts line into manageable parts"
-        if line.startswith("#"):
-            return line
+    def create(cls, ip_address, host):
+        return cls("%s\t%s\n" % (ip_address, host))
 
-        return re.split("\s+", line)
+    @property
+    def is_host(self):
+        return not self.value.startswith("#")
 
-    @classmethod
-    def join_hosts_line(cls, line):
-        "Combine an /etc/hosts line back into the proper format"
+    @property
+    def host_parts(self):
+        if self.is_host:
+            return re.split("\s+", self.value)
 
-        if isinstance(line, basestring) and line.startswith("#"):
-            return line
+    @property
+    def host(self):
+        try:
+            return self.host_parts[1]
+        except IndexError:
+            return None
 
-        return "\t".join(line)
+    @property
+    def ip(self):
+        try:
+            return self.host_parts[0]
+        except IndexError:
+            return None
