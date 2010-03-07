@@ -20,7 +20,7 @@ class HostsFile(object):
 
         with open(self.path, "w") as file:
             for line in self.lines:
-                file.write(unicode(line))
+                file.write(line.value)
 
     def host_exists(self, host):
         "Check if a host exists within an array of /etc/hosts lines"

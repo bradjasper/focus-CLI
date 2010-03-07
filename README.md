@@ -39,7 +39,10 @@ Add some entries to **$HOME/.focus**
     digg.com
     techmeme.com
     techcrunch.com
-
+    mixpanel.com
+    twitter.com
+    api.twitter.com
+        
 Jump in and out of focus mode:
 
     > focus
