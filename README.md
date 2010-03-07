@@ -30,6 +30,8 @@ Focus is easy to get started with and is careful about clobbering your /etc/host
 
     sudo pip install -e git+git@github.com:bradjasper/focus.git#egg=focus
 
+We recommend backing up your **/etc/hosts** file first. Focus is careful (and backs up to /tmp/hosts.bak automatically), but better safe than sorry.
+
 Add some entries to **$HOME/.focus**
 
     > cat $HOME/.focus
