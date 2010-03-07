@@ -17,12 +17,12 @@ For example, if you need a break from the impulse of checking Gmail simply add *
 Then enter focus mode:
 
     > focus
-    Focus is activated... go!
+    -> Focus is activated... Go focus!
 
 Now you're blocked from Gmail. Once you've accomplished some work and you want to switch back, simply unfocus:
 
     > unfocus
-    Focus is deactivated...
+    -> Focus is deactivated... Were you productive?
 
 Focus is easy to get started with and is careful about clobbering your /etc/hosts file.
 
@@ -51,10 +51,6 @@ Jump in and out of focus mode:
     > ping mail.google.com
     PING mail.google.com (209.85.225.19): 56 data bytes
     ..
-
-# TODO
-
-* Change internals so existing lines aren't re-written. This means no internal conversion back and forth.
 
 # Contact
 bjasper@gmail.com
