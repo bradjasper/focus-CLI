@@ -10,7 +10,7 @@ class HostsFile(object):
     def __init__(self, path="/etc/hosts", backup="/tmp/hosts.bak"):
         self.path = path
         self.backup = backup
-        self.lines = self.parse_hosts_file(self.path)
+        self.lines = HostsFile.parse_hosts_file(self.path)
 
     def write(self):
         "Write out the hosts file to a path"
