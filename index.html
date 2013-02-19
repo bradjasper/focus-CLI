@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Focus by bradjasper</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Focus</h1>
+        <h2>Give yourself focus by removing distracting websites</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/bradjasper/focus/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/bradjasper/focus/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/bradjasper/focus" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <pre> ______
+|  ____|
+| |__ ___   ___ _   _ ___
+|  __/ _ \ / __| | | / __|
+| | | (_) | (__| |_| \__ \
+|_|  \___/ \___|\__,_|___/
+
+    Focus is a command line utility to steal back your focus.
+</pre>
+
+<p>Focus is a small command line utility that blocks your favorite sites by adding local host names to your <strong>/etc/hosts</strong> file.</p>
+
+<p>For example, if you need a break from the impulse of checking Gmail simply add <strong>mail.google.com</strong> to your <strong>$HOME/.focus</strong> file.</p>
+
+<pre><code>echo "mail.google.com" &gt;&gt; ~/.focus
+</code></pre>
+
+<p>Then enter focus mode:</p>
+
+<pre><code>&gt; focus
+Focusing...go be productive!
+</code></pre>
+
+<p>Now you're blocked from Gmail. Once you've accomplished some work and you want to switch back, simply unfocus:</p>
+
+<pre><code>&gt; unfocus
+Unfocusing..were you productive?
+</code></pre>
+
+<p>Focus is easy to get started with and is careful about clobbering your /etc/hosts file.</p>
+
+<h1>Install</h1>
+
+<pre><code>Download the focus.sh script and source it in your .bashrc or .bash_profile
+
+    source ~/bin/focus.sh
+</code></pre>
+
+<p><strong>Warning:</strong> I recommend backing up your <strong>/etc/hosts</strong> file first. Focus is careful (and backs up to /tmp/hosts.bak automatically), but better safe than sorry.</p>
+
+<p>Add some entries to <strong>$HOME/.focus</strong></p>
+
+<pre><code>&gt; cat $HOME/.focus
+news.ycombinator.com
+reddit.com
+mail.google.com
+digg.com
+techmeme.com
+techcrunch.com
+mixpanel.com
+twitter.com
+api.twitter.com
+</code></pre>
+
+<p>Jump in and out of focus mode:</p>
+
+<pre><code>&gt; focus
+&gt; ping mail.google.com
+PING mail.google.com (127.0.0.1): 56 data bytes
+....
+
+&gt; unfocus
+&gt; ping mail.google.com
+PING mail.google.com (209.85.225.19): 56 data bytes
+..
+</code></pre>
+
+<h1>Contact</h1>
+
+<p><a href="https://github.com/bradjasper" class="user-mention">@bradjasper</a></p>
+      </section>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-11057852-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
