@@ -17,20 +17,22 @@ For example, if you need a break from the impulse of checking Gmail simply add *
 Then enter focus mode:
 
     > focus
-    -> Focus is activated... Go focus!
+    Focusing...go be productive!
 
 Now you're blocked from Gmail. Once you've accomplished some work and you want to switch back, simply unfocus:
 
     > unfocus
-    -> Focus is deactivated... Were you productive?
+    Unfocusing..were you productive?
 
 Focus is easy to get started with and is careful about clobbering your /etc/hosts file.
 
 # Install
 
-    sudo pip install -e git+git@github.com:bradjasper/focus.git#egg=focus
+    Download the focus.sh script and source it in your .bashrc or .bash_profile
 
-I recommend backing up your **/etc/hosts** file first. Focus is careful (and backs up to /tmp/hosts.bak automatically), but better safe than sorry.
+        source ~/bin/focus.sh
+
+**Warning:** I recommend backing up your **/etc/hosts** file first. Focus is careful (and backs up to /tmp/hosts.bak automatically), but better safe than sorry.
 
 Add some entries to **$HOME/.focus**
 
@@ -58,4 +60,4 @@ Jump in and out of focus mode:
     ..
 
 # Contact
-bjasper@gmail.com
+@bradjasper
