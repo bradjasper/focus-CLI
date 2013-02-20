@@ -32,7 +32,7 @@ Download the focus.sh script and source it in your .bashrc or .bash_profile
 
     source ~/bin/focus.sh
 
-**Warning:** I recommend backing up your **/etc/hosts** file first. Focus is careful (and backs up to /tmp/hosts.bak automatically), but better safe than sorry.
+**Warning:** I recommend backing up your **/etc/hosts** file first. Focus is careful (and backs up to /etc/hosts.bak automatically), but better safe than sorry.
 
 Add some entries to **$HOME/.focus**
 
