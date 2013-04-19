@@ -5,25 +5,19 @@
 # A simple script to add hostnames in $HOME/.focus to your /etc/hosts file
 # under the host name 127.0.0.1 so you can't visit them....so you focus :)
 #
-
-focus() {
-    backup_hosts_file && add_hosts_line && echo "Focusing...go be productive!"
-}
-
-unfocus() {
-    backup_hosts_file && delete_hosts_line && echo "Unfocusing..were you productive?"
-}
+# Utility script that's called by focus/unfocus scripts
+#
 
 backup_hosts_file() {
-    sudo cp /etc/hosts /etc/hosts.bak
+    cp /etc/hosts /etc/hosts.bak
 }
 
 add_hosts_line() {
-    sudo -s "echo $(hosts_line) >> /etc/hosts"
+    echo $(hosts_line) >> /etc/hosts
 }
 
 delete_hosts_line() {
-    sudo -s "sed '/focus_activation_host/d' /etc/hosts.bak > /etc/hosts"
+    sed '/focus_activation_host/d' /etc/hosts.bak > /etc/hosts
 }
 
 hosts_line() {
@@ -35,3 +29,9 @@ focus_hosts() {
         echo -n " $host www.$host";
     done
 }
+
+if [[ "$@" == "focus" ]]; then
+    backup_hosts_file && add_hosts_line && echo "Focusing...go be productive!"
+elif [[ "$@" == "unfocus" ]]; then
+    backup_hosts_file && delete_hosts_line && echo "Unfocusing..were you productive?"
+fi

@@ -16,21 +16,19 @@ For example, if you need a break from the impulse of checking Gmail simply add *
 
 Then enter focus mode:
 
-    > focus
+    > ./focus
     Focusing...go be productive!
 
 Now you're blocked from Gmail. Once you've accomplished some work and you want to switch back, simply unfocus:
 
-    > unfocus
+    > ./unfocus
     Unfocusing..were you productive?
 
 Focus is easy to get started with and is careful about clobbering your /etc/hosts file.
 
 # Install
 
-Download the focus.sh script and source it in your .bashrc or .bash_profile
-
-    source ~/bin/focus.sh
+Download the 3 scripts and make sure focus/unfocus are somewhere on your path.
 
 **Warning:** I recommend backing up your **/etc/hosts** file first. Focus is careful (and backs up to /etc/hosts.bak automatically), but better safe than sorry.
 
@@ -58,6 +56,19 @@ Jump in and out of focus mode:
     > ping mail.google.com
     PING mail.google.com (209.85.225.19): 56 data bytes
     ..
+
+# Focusing without a sudo password
+
+Focus modifies your /etc/hosts file which requires a sudo password. If you want to get around entering this for every command, type `sudo visudo` and add the following line:
+
+    brad    ALL=(ALL) NOPASSWD: /Users/brad/Projects/focus/focus.sh                         
+
+Replaces brad with your username (`whoami` will help here) and `/Users/brad/Projects/focus/focus.sh` to the path of your `focus.sh` file.
+
+You should now be able to use focus without entering your sudo password!
+
+**Warning:** Be careful here. Using visudo is an advanced topic and if you don't know what you're doing you might mess up your system.
+
 
 # Contact
 @bradjasper

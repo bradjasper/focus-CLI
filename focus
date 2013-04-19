@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Read symlink if one exists
+if [[ $(readlink $BASH_SOURCE) != "" ]]; then
+    DIR=$(dirname $(readlink $BASH_SOURCE))
+else
+    DIR=$(dirname $BASH_SOURCE)
+fi
+
+sudo $DIR/focus.sh focus
