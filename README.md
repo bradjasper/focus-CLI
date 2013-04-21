@@ -59,15 +59,15 @@ Jump in and out of focus mode:
 
 # Focusing without a sudo password
 
+**Warning:** Using visudo is an advanced topic and if you don't know what you're doing you might mess up your system.
+
 Focus modifies your /etc/hosts file which requires a sudo password. If you want to get around entering this for every command, type `sudo visudo` and add the following line:
 
     brad    ALL=(ALL) NOPASSWD: /Users/brad/Projects/focus/focus.sh                         
 
-Replaces brad with your username (`whoami` will help here) and `/Users/brad/Projects/focus/focus.sh` to the path of your `focus.sh` file.
+Replace brad with your username (`whoami` will help here) and `/Users/brad/Projects/focus/focus.sh` to the path of your `focus.sh` file.
 
 You should now be able to use focus without entering your sudo password!
-
-**Warning:** Be careful here. Using visudo is an advanced topic and if you don't know what you're doing you might mess up your system.
 
 
 # Contact
