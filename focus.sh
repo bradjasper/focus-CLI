@@ -8,16 +8,19 @@
 # Utility script that's called by focus/unfocus scripts
 #
 
+# A unique identifier to let us know which host lines are safe to delete
+FOCUS_HOST_IDENTIFIER="focus_activation_host"
+
 backup_hosts_file() {
     cp /etc/hosts /etc/hosts.bak
 }
 
 add_hosts_line() {
-    echo "127.0.0.1 $(focus_hosts) focus_activation_host" >> /etc/hosts
+    echo "127.0.0.1 $(focus_hosts) $FOCUS_HOST_IDENTIFIER" >> /etc/hosts
 }
 
 delete_hosts_line() {
-    sed '/focus_activation_host/d' /etc/hosts.bak > /etc/hosts
+    sed "/$FOCUS_HOST_IDENTIFIER/d" /etc/hosts.bak > /etc/hosts
 }
 
 focus_hosts() {
