@@ -13,15 +13,11 @@ backup_hosts_file() {
 }
 
 add_hosts_line() {
-    echo $(hosts_line) >> /etc/hosts
+    echo "127.0.0.1 $(focus_hosts) focus_activation_host" >> /etc/hosts
 }
 
 delete_hosts_line() {
     sed '/focus_activation_host/d' /etc/hosts.bak > /etc/hosts
-}
-
-hosts_line() {
-    echo "127.0.0.1 $(focus_hosts) focus_activation_host"
 }
 
 focus_hosts() {
