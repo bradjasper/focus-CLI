@@ -16,7 +16,8 @@ backup_hosts_file() {
 }
 
 add_hosts_line() {
-    echo "127.0.0.1 $(focus_hosts) $FOCUS_HOST_IDENTIFIER" >> /etc/hosts
+    echo "127.0.0.1    $(focus_hosts) $FOCUS_HOST_IDENTIFIER" >> /etc/hosts
+    echo "::1    $(focus_hosts) $FOCUS_HOST_IDENTIFIER" >> /etc/hosts
 }
 
 delete_hosts_line() {
