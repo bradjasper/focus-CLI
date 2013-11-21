@@ -2,36 +2,52 @@
 #
 # Focus
 #
-# A simple script to add hostnames in $HOME/.focus to your /etc/hosts file
-# under the host name 127.0.0.1 so you can't visit them....so you focus :)
+# A simple script that blocks distracting websites in the firewall
 #
 # Utility script that's called by focus/unfocus scripts
 #
 
-# A unique identifier to let us know which host lines are safe to delete
-FOCUS_HOST_IDENTIFIER="focus_activation_host"
+BLOCKED_IDS="/tmp/.focus.blocked.ipfw.ids"
 
-backup_hosts_file() {
-    cp /etc/hosts /etc/hosts.bak
+hostname_lookup() {
+    host $1 | grep "has address" | awk '{print $4}'
 }
 
-add_hosts_line() {
-    echo "127.0.0.1    $(focus_hosts) $FOCUS_HOST_IDENTIFIER" >> /etc/hosts
-    echo "::1    $(focus_hosts) $FOCUS_HOST_IDENTIFIER" >> /etc/hosts
+block_ip() {
+    ipfw add deny ip from me to $1 | awk '{print $1}' >> $BLOCKED_IDS
 }
 
-delete_hosts_line() {
-    sed "/$FOCUS_HOST_IDENTIFIER/d" /etc/hosts.bak > /etc/hosts
+block_host() {
+    hostname_lookup $1 | while read ip; do block_ip $ip; done
+}
+
+unblock_rule() {
+    ipfw delete $1
+}
+
+unblock_all() {
+    cat $BLOCKED_IDS | while read id; do unblock_rule $id; done
+    rm $BLOCKED_IDS
 }
 
 focus_hosts() {
-    cat $HOME/.focus | while read host; do
-        echo -n " $host www.$host";
+    cat $HOME/.focus | while read host; do printf "www.$host\n$host\n"; done
+}
+
+focus() {
+    echo "Focusing...go be productive!"
+    focus_hosts | while read host; do
+        block_host $host;
     done
 }
 
+unfocus() {
+    echo "Unfocusing..were you productive?"
+    unblock_all
+}
+
 if [[ "$@" == "focus" ]]; then
-    backup_hosts_file && add_hosts_line && echo "Focusing...go be productive!"
+    focus
 elif [[ "$@" == "unfocus" ]]; then
-    backup_hosts_file && delete_hosts_line && echo "Unfocusing..were you productive?"
+    unfocus
 fi
