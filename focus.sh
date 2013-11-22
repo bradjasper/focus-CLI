@@ -7,43 +7,31 @@
 # Utility script that's called by focus/unfocus scripts
 #
 
-BLOCKED_IDS="/tmp/.focus.blocked.ipfw.ids"
-
-hostname_lookup() {
-    host $1 | grep "has address" | awk '{print $4}'
-}
-
-block_ip() {
-    ipfw add deny ip from me to $1 | awk '{print $1}' >> $BLOCKED_IDS
-}
-
-block_host() {
-    hostname_lookup $1 | while read ip; do block_ip $ip; done
-}
-
-unblock_rule() {
-    ipfw delete $1
-}
-
-unblock_all() {
-    cat $BLOCKED_IDS | while read id; do unblock_rule $id; done
-    rm $BLOCKED_IDS
-}
-
-focus_hosts() {
-    cat $HOME/.focus | while read host; do printf "www.$host\n$host\n"; done
-}
+FOCUS_FILE=$HOME/.focus
+FOCUS_PAC_FILE=$FOCUS_FILE.pak
 
 focus() {
     echo "Focusing...go be productive!"
-    focus_hosts | while read host; do
-        block_host $host;
-    done
+    write_pac_file
+    networksetup -setautoproxyurl "Wi-Fi" "file://$FOCUS_PAC_FILE"
 }
 
 unfocus() {
     echo "Unfocusing..were you productive?"
-    unblock_all
+    networksetup -setautoproxyurl "Wi-Fi" null
+}
+
+focus_hosts() {
+    cat $FOCUS_FILE | while read host; do printf "www.$host\n$host\n"; done
+}
+
+write_pac_file() {
+    echo 'function FindProxyForURL(url, host) {' > $FOCUS_PAC_FILE
+    focus_hosts | while read host; do
+        echo "    if (dnsDomainIs(host,'$host')) return 'PROXY localhost:8080';"
+    done >> $FOCUS_PAC_FILE
+    echo "    return 'DIRECT';" >> $FOCUS_PAC_FILE
+    echo "}" >> $FOCUS_PAC_FILE
 }
 
 if [[ "$@" == "focus" ]]; then
