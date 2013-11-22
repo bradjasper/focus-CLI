@@ -11,20 +11,20 @@ FOCUS_FILE=$HOME/.focus
 FOCUS_PAC_FILE=$FOCUS_FILE.pak
 
 # Figure out which Network is active
-SERVICE_GUID=`echo "open|||get State:/Network/Global/IPv4|||d.show" | \
+FOCUS_SERVICE_GUID=`echo "open|||get State:/Network/Global/IPv4|||d.show" | \
     tr '|||' '\n' | scutil | grep "PrimaryService" | awk '{print $3}'`
-SERVICE_NAME=`echo "open|||get Setup:/Network/Service/$SERVICE_GUID|||d.show" |\
+FOCUS_SERVICE_NAME=`echo "open|||get Setup:/Network/Service/$FOCUS_SERVICE_GUID|||d.show" |\
     tr '|||' '\n' | scutil | grep "UserDefinedName" | awk -F': ' '{print $2}'`
 
 focus() {
     echo "Focusing...go be productive!"
     write_pac_file
-    networksetup -setautoproxyurl "$SERVICE_NAME" "file://$FOCUS_PAC_FILE"
+    networksetup -setautoproxyurl "$FOCUS_SERVICE_NAME" "file://$FOCUS_PAC_FILE"
 }
 
 unfocus() {
     echo "Unfocusing..were you productive?"
-    networksetup -setautoproxyurl "$SERVICE_NAME" null
+    networksetup -setautoproxyurl "$FOCUS_SERVICE_NAME" null
 }
 
 focus_hosts() {
