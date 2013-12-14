@@ -7,7 +7,8 @@
 # Utility script that's called by focus/unfocus scripts
 #
 
-FOCUS_FILE=$HOME/.focus
+USERNAME=brad
+FOCUS_FILE=/Users/$USERNAME/.focus
 FOCUS_PAC_FILE=$FOCUS_FILE.pak
 
 # Figure out which Network is active
@@ -40,8 +41,33 @@ write_pac_file() {
     echo "}" >> $FOCUS_PAC_FILE
 }
 
+read_pac_file() {
+    networksetup -getautoproxyurl "$FOCUS_SERVICE_NAME" | head -n1 | awk '{print $2}'
+}
+
+focus_is_active() {
+    local currFile=$(read_pac_file)
+    local focusFile="file://$FOCUS_PAC_FILE"
+    if [ "$currFile" == "$focusFile" ]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+
 if [[ "$@" == "focus" ]]; then
     focus
 elif [[ "$@" == "unfocus" ]]; then
     unfocus
+elif [[ "$@" == "current_pac_file" ]]; then
+    read_pac_file
+elif [[ "$@" == "status" ]]; then
+    if focus_is_active
+    then
+        echo "active"
+    else
+        echo "inactive"
+    fi
 fi
