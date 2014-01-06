@@ -8,6 +8,8 @@
     Focus is a command line utility to steal back your focus from distracting websites.
 </pre>
 
+<strong>NOTE:</strong> Looking for an OS X app version of this? Check out http://www.heyfocus.com/
+
 Focus is a small command line utility that blocks your favorite sites by adding rules to your firewall.
 
 For example, if you need a break from the impulse of checking Gmail simply add **mail.google.com** to your **$HOME/.focus** file.
