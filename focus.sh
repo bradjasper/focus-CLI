@@ -7,8 +7,7 @@
 # Utility script that's called by focus/unfocus scripts
 #
 
-USERNAME=brad
-FOCUS_FILE=/Users/$USERNAME/.focus
+FOCUS_FILE=/Users/$USER/.focus
 FOCUS_PAC_FILE=$FOCUS_FILE.pak
 
 # Figure out which Network is active
